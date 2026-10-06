@@ -6,6 +6,20 @@ auto-tags and publishes a versioned + `:latest` Docker image. Each release
 gets a top-level section here; the project source of truth for the
 maintenance policy is [`CLAUDE.md`](CLAUDE.md) under *Changelog discipline*.
 
+## 2026.10.6
+
+### Fixed
+
+- **AWS-managed IAM policies are attachable.** Naming `arn:aws:iam::aws:policy/...` in
+  `AttachRolePolicy`/`AttachUserPolicy`/`AttachGroupPolicy`, `GetPolicy`, `GetPolicyVersion` or a
+  permissions boundary now materializes that policy in the caller's account from moto's bundled
+  catalog (plus a small supplement for newer policies), as it exists in every AWS account.
+  `ListPolicies(Scope=Local)` is unchanged; `ListPolicies(Scope=AWS)` only lists policies that
+  have been referenced.
+- **`SetSecurityTokenServicePreferences` is reflected in `GetAccountSummary`**
+  (`GlobalEndpointTokenVersion` 1 or 2), so `aws_iam_security_token_service_preferences` no longer
+  shows a perpetual diff.
+
 ## 2026.8.26
 
 ### Changed
